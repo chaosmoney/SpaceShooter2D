@@ -1,14 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Player : MonoBehaviour
 {
     private Transform tr;
     public float moveSpeed = 10.0f;
     private Animator anim;
-    [SerializeField]
-    private Bullet bullet;
+    public Action levelUp;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +20,6 @@ public class Player : MonoBehaviour
     void Update()
     {
         Move();
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Bullet bl = Instantiate(bullet);
-            bl.transform.position = this.transform.position;
-        }
     }
 
     private void Move()
@@ -61,9 +56,18 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.transform.tag == "Item")
+        if(collision.tag == "Boom")
         {
-            
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Coin")
+        {
+            Destroy(collision.gameObject);
+        }
+        else if (collision.tag == "Power")
+        {
+            levelUp();
+            Destroy(collision.gameObject);
         }
     }
 }

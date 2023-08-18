@@ -11,9 +11,9 @@ public class Enemy : MonoBehaviour
     {
         anim = GetComponentInChildren<Animator>();
     }
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(other.transform.tag == "Bullet")
+        if (collision.tag == "Bullet")
         {
             this.StartCoroutine(this.WaitToDie());
         }
